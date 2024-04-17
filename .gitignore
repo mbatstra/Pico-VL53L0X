@@ -2,3 +2,5 @@
 *.cpp~
 *.h~
 .DS_Store
+build/
+.vscode/
