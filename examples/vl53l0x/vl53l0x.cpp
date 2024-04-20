@@ -3,14 +3,16 @@
 #include "pico/stdlib.h"
 #include <stdio.h>
 
-Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+Adafruit_VL53L0X lox;
 
 int main(){
     stdio_init_all();
     printf("Hello, world! VL53L0X Test\n");
     if(!lox.begin()){
-        printf("Failed to boot VL53L0X\n");
-        while(1);
+        while(1){
+            printf("Failed to boot VL53L0X\n");
+            sleep_ms(1000);
+        }
     }
     printf("VL53L0X API Simple Ranging example\n\n");
 
