@@ -22,12 +22,6 @@
 #ifndef ADAFRUIT_VL53L0X_H
 #define ADAFRUIT_VL53L0X_H
 
-// #if (ARDUINO >= 100)
-// #include "Arduino.h"
-// #else
-// #include "WProgram.h"
-// #endif
-
 #include "hardware/i2c.h"
 #include "vl53l0x_api.h"
 
@@ -49,8 +43,7 @@ public:
     VL53L0X_SENSE_HIGH_ACCURACY
   } VL53L0X_Sense_config_t;
 
-  bool begin(uint8_t i2c_addr = VL53L0X_I2C_ADDR, bool debug = false,
-                i2c_inst_t *i2c = i2c0,
+  bool begin(uint8_t i2c_addr = VL53L0X_I2C_ADDR, i2c_inst_t *i2c = i2c0,
                 VL53L0X_Sense_config_t vl_config = VL53L0X_SENSE_DEFAULT);
   bool setAddress(uint8_t newAddr);
 
@@ -61,52 +54,41 @@ public:
       @brief  get a ranging measurement from the device
       @param  pRangingMeasurementData the pointer to the struct the data will be
      stored in
-      @param debug Optional debug flag. If true debug information will print via
-     Serial.print during execution. Defaults to false.
       @returns True if address was set successfully, False otherwise
   */
   /**************************************************************************/
   VL53L0X_Error
   rangingTest(VL53L0X_RangingMeasurementData_t *pRangingMeasurementData,
               bool debug = false) {
-    return getSingleRangingMeasurement(pRangingMeasurementData, debug);
+    return getSingleRangingMeasurement(pRangingMeasurementData);
   };
 
   VL53L0X_Error getSingleRangingMeasurement(
-      VL53L0X_RangingMeasurementData_t *pRangingMeasurementData,
-      bool debug = false);
-  void
-  printRangeStatus(VL53L0X_RangingMeasurementData_t *pRangingMeasurementData);
+      VL53L0X_RangingMeasurementData_t *pRangingMeasurementData);
+  void printRangeStatus(
+      VL53L0X_RangingMeasurementData_t *pRangingMeasurementData);
 
   VL53L0X_Error getRangingMeasurement(
-      VL53L0X_RangingMeasurementData_t *pRangingMeasurementData,
-      bool debug = false);
-  VL53L0X_Error startMeasurement(bool debug = false);
-  VL53L0X_Error stopMeasurement(bool debug = false);
+      VL53L0X_RangingMeasurementData_t *pRangingMeasurementData);
+  VL53L0X_Error startMeasurement();
+  VL53L0X_Error stopMeasurement();
   VL53L0X_Error getLimitCheckCurrent(uint8_t LimitCheckId,
-                                     FixPoint1616_t *pLimitCheckCurrent,
-                                     bool debug = false);
-  VL53L0X_Error getDeviceMode(VL53L0X_DeviceModes *pDeviceMode,
-                              bool debug = false);
-  VL53L0X_Error setDeviceMode(VL53L0X_DeviceModes DeviceMode,
-                              bool debug = false);
+                                     FixPoint1616_t *pLimitCheckCurrent);
+  VL53L0X_Error getDeviceMode(VL53L0X_DeviceModes *pDeviceMode);
+  VL53L0X_Error setDeviceMode(VL53L0X_DeviceModes DeviceMode);
 
   VL53L0X_Error setInterruptThresholds(FixPoint1616_t ThresholdLow,
-                                       FixPoint1616_t ThresholdHigh,
-                                       bool debug = false);
+                                       FixPoint1616_t ThresholdHigh);
   VL53L0X_Error getInterruptThresholds(FixPoint1616_t *pThresholdLow,
-                                       FixPoint1616_t *pThresholdHigh,
-                                       bool debug = false);
-  VL53L0X_Error clearInterruptMask(bool debug = false);
+                                       FixPoint1616_t *pThresholdHigh);
+  VL53L0X_Error clearInterruptMask();
 
   VL53L0X_Error getGpioConfig(VL53L0X_DeviceModes *pDeviceMode,
                               VL53L0X_GpioFunctionality *pFunctionality,
-                              VL53L0X_InterruptPolarity *pPolarity,
-                              bool debug = false);
+                              VL53L0X_InterruptPolarity *pPolarity);
   VL53L0X_Error setGpioConfig(VL53L0X_DeviceModes DeviceMode,
                               VL53L0X_GpioFunctionality Functionality,
-                              VL53L0X_InterruptPolarity Polarity,
-                              bool debug = false);
+                              VL53L0X_InterruptPolarity Polarity);
 
   VL53L0X_Error Status =
       VL53L0X_ERROR_NONE; ///< indicates whether or not the sensor has
