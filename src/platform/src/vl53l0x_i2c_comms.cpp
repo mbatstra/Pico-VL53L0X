@@ -3,10 +3,22 @@
 
 #include <stdio.h>
 
-//#define I2C_DEBUG
+// #define I2C_DEBUG
 
-int VL53L0X_i2c_init(i2c_inst_t *i2c) {
-  i2c_init(i2c, 200 * 1000);
+int VL53L0X_i2c_init(i2c_inst_t *bus) {
+  i2c_init(bus, 200 * 1000);
+
+  if (bus == i2c0) {
+        gpio_set_function(VL53L0X_I2C0_SDA, GPIO_FUNC_I2C);
+        gpio_set_function(VL53L0X_I2C0_SCL, GPIO_FUNC_I2C);
+        gpio_pull_up(VL53L0X_I2C0_SDA);
+        gpio_pull_up(VL53L0X_I2C0_SCL);
+    } else if (bus == i2c1) {
+        gpio_set_function(VL53L0X_I2C1_SDA, GPIO_FUNC_I2C);
+        gpio_set_function(VL53L0X_I2C1_SCL, GPIO_FUNC_I2C);
+        gpio_pull_up(VL53L0X_I2C1_SDA);
+        gpio_pull_up(VL53L0X_I2C1_SCL);
+    }
   return VL53L0X_ERROR_NONE;
 }
 
@@ -15,8 +27,12 @@ int VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t *pdata,
   // i2c->beginTransmission(deviceAddress);
   // i2c->write(index);
   // i2c->write((uint8_t)pdata[0]);
-  i2c_write_blocking(i2c, deviceAddress, &index, 1, true);
-  i2c_write_blocking(i2c, deviceAddress, pdata, count, false);
+  uint8_t buff[count + 1];
+  buff[0] = index;
+  for (int i = 0; i < count; i++) {
+    buff[i + 1] = pdata[i];
+  }
+  i2c_write_blocking(i2c, deviceAddress, buff, count + 1, false);
 
 #ifdef I2C_DEBUG
   printf("Writing %d bytes data to addr 0x%02X: ", count, index);

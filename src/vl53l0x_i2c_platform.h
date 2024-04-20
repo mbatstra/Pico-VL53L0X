@@ -1,6 +1,12 @@
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
 
+#define VL53L0X_I2C0_SDA 0
+#define VL53L0X_I2C0_SCL 1
+
+#define VL53L0X_I2C1_SDA 2
+#define VL53L0X_I2C1_SCL 3
+
 // initialize I2C
 int VL53L0X_i2c_init(i2c_inst_t *i2c);
 int VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t *pdata,
