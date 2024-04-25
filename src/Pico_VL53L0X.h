@@ -19,8 +19,8 @@
   redistribution
  ****************************************************/
 
-#ifndef ADAFRUIT_VL53L0X_H
-#define ADAFRUIT_VL53L0X_H
+#ifndef PICO_VL53L0X_H
+#define PICO_VL53L0X_H
 
 #include "hardware/i2c.h"
 #include "vl53l0x_api.h"
@@ -33,7 +33,7 @@
    time-of-flight sensor chips
 */
 /**************************************************************************/
-class Adafruit_VL53L0X {
+class Pico_VL53L0X {
 public:
   /** Sensor configurations */
   typedef enum {
@@ -58,8 +58,7 @@ public:
   */
   /**************************************************************************/
   VL53L0X_Error
-  rangingTest(VL53L0X_RangingMeasurementData_t *pRangingMeasurementData,
-              bool debug = false) {
+  rangingTest(VL53L0X_RangingMeasurementData_t *pRangingMeasurementData) {
     return getSingleRangingMeasurement(pRangingMeasurementData);
   };
 

@@ -1,9 +1,9 @@
-#include "Adafruit_VL53L0X.h"
+#include "Pico_VL53L0X.h"
 
 #include "pico/stdlib.h"
 #include <stdio.h>
 
-Adafruit_VL53L0X lox;
+Pico_VL53L0X lox;
 
 int main(){
     stdio_init_all();
@@ -19,7 +19,7 @@ int main(){
     VL53L0X_RangingMeasurementData_t measure;
 
     printf("Reading a measurement... ");
-    lox.rangingTest(&measure, false); // pass in 'true' to get debug data printout!
+    lox.rangingTest(&measure);
     
     if (measure.RangeStatus != 4) {  // phase failures have incorrect data
         printf("Distance (mm): %d\n", measure.RangeMilliMeter);

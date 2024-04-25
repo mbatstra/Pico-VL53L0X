@@ -1,9 +1,9 @@
-#include "Adafruit_VL53L0X.h"
+#include "Pico_VL53L0X.h"
 
 #include "pico/stdlib.h"
 #include <stdio.h>
 
-Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+Pico_VL53L0X lox = Pico_VL53L0X();
 
 int main(){
     stdio_init_all();
