@@ -19,7 +19,7 @@ int main(){
 
     printf("VL53L0X API Continuous Ranging example\n\n");
 
-    lox.startRangeContinuous(60);
+    lox.startRangeContinuous(40);
 
     while(1){
         if(lox.isRangeComplete()){

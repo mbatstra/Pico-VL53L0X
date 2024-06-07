@@ -672,7 +672,7 @@ uint16_t Pico_VL53L0X::readRange(void) {
   VL53L0X_DeviceModes DeviceMode;
   VL53L0X_GetDeviceMode(pMyDevice, &DeviceMode);
 
-  if(DeviceMode == VL53L0X_DEVICEMODE_CONTINUOUS_RANGING)
+  if(DeviceMode == VL53L0X_DEVICEMODE_CONTINUOUS_RANGING || DeviceMode == VL53L0X_DEVICEMODE_CONTINUOUS_TIMED_RANGING)
   {
     Status = VL53L0X_GetRangingMeasurementData(pMyDevice, &measure);
     VL53L0X_ClearInterruptMask(pMyDevice, VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY);
@@ -780,7 +780,7 @@ bool Pico_VL53L0X::startRangeContinuous(uint16_t period_ms) {
    * Here we fix the mode! */
   // first lets set the device in SINGLE_Ranging mode
   Status = VL53L0X_SetDeviceMode(pMyDevice,
-                                 VL53L0X_DEVICEMODE_CONTINUOUS_RANGING);
+                                 VL53L0X_DEVICEMODE_CONTINUOUS_TIMED_RANGING);
 
   if (Status == VL53L0X_ERROR_NONE) {
     Status =
